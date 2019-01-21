@@ -1,0 +1,21 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "useBuiltIns": "usage", //自动在该文件头部注入相应的polyfill包
+        "targets": {
+          "chrome": "64" //指定需要支持的环境
+        }
+      }
+    ],
+    "@babel/react"
+  ],
+  "plugins": [
+    [
+      "import", {"libraryName": "antd", "style": "css"} //支持antd按需加载组件
+    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }], //支持装饰器语法
+    "@babel/plugin-proposal-class-properties" //使用calss新属性
+  ]
+}
