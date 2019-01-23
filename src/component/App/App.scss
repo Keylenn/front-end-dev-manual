@@ -11,7 +11,7 @@
 }
 :global(.app){ //声明一个全局规则,不会被编译成哈希字符串:<div class="app">
   text-align:center;
-  width:30%;
+  width:50%;
   // 建议使用url+路径引用，不适用resolve，以避免base64没有打包进dist的情况
   background-image: url("../../assets/img/rate-repeat.png");
   background-size: 2rem 2rem;
@@ -31,5 +31,8 @@
 
 .testPostcssAssets{
   width: width('no-result.png');
+}
+.sectionLayout{
+ display: flex;
 }
 

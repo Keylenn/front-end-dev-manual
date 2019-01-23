@@ -2,19 +2,13 @@ import React from 'react';
 
 import style from './App.scss';
 import {Button} from "antd";
-import {asyncGet} from '../../service/axios';
 import noResult from '../../assets/img/no-result.png';
 import TestClassProperties from "./TestClassProperties";
 import Audio from './Audio';
+import TestEgg from './TestEgg';
+import TestCRUD from './TestCRUD';
 
-asyncGet('/hello',{
-  params:{
-    id:1223,
-    author:1
-  },
-  retry: 5
-})
-  .then(res=>console.log('res2', res))
+
 
 
 const App = ()=>{
@@ -30,7 +24,11 @@ const App = ()=>{
       </div>
       <Button type="primary">antdButton</Button>
       <TestClassProperties />
-      <Audio src= "./message_prompt.ogg" />  {/*src路径要相对于dist */}
+      <section className={style.sectionLayout}>
+        <Audio src= "./message_prompt.ogg" />  {/*src路径要相对于dist */}
+        <TestEgg />
+      </section>
+      <TestCRUD />
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import axios from 'axios';
+import {request} from '../../utils/func'
+import { config } from '../common/config'
 
 const _instance = axios.create({
-  baseURL: 'https://www.easy-mock.com/mock/5c009263f02bcd39640db5bf/api/',
+  baseURL: config.contextPath,
   timeout: 1000,
   retry: 4, //默认请求次数
   retryDelay: 1000   //默认请求的间隙
@@ -16,10 +18,19 @@ const asyncGet = async(url, config) =>{
   return await _instance.get(url, config);
 }
 const asyncPost = async(url, data, config)=>{
-  return await _instance(url, data, config);
+  return await _instance.post(url, data, config);
 }
 
-_instance.interceptors.request.use(config=>config, err=>{
+//添加拦截器，不安全请求时添加csrfToken
+_instance.interceptors.request.use(config=>{
+  let _config = Object.assign({}, config)
+  const {isCsrfSafeMethod, getCsrfToken} = request;
+  if(!isCsrfSafeMethod(_config.method)){
+    const csrfToken = getCsrfToken('csrfToken');
+    _config.headers['x-csrf-token'] = csrfToken;
+  }
+  return _config;
+}, err=>{
   console.error('请求超时!');
   return Promise.resolve(err.response); //在成功的回调中返回error信息
 });
