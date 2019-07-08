@@ -1,5 +1,5 @@
 {
-  "_comment":{
+  "_comment": {
     "dll": "打包动态链接库",
     "@babel/plugin-proposal-class-properties": "babel7.0支持class新语法",
     "@babel/plugin-proposal-decorators": "babel7.0支持装饰器语法",
@@ -28,7 +28,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js",
     "dll": "webpack --config config/webpack.config.dll.js"
   },
@@ -38,7 +38,7 @@
     "@babel/plugin-proposal-decorators": "^7.2.3",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.4",
     "babel-plugin-import": "^1.11.0",
     "clean-webpack-plugin": "^1.0.0",

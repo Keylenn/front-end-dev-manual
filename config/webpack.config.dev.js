@@ -10,6 +10,7 @@ const devCofig = merge(baseConfig, {
   mode: "development",
   devtool: "cheap-module-eval-source-map",
   devServer: {
+    host: '0.0.0.0',//可以使用ip访问
     contentBase: join("dist"), //配置DevServer HTTP服务器的文件根目录为静态文件根目录
     port: 1223,
     compress: true, // 服务器返回浏览器的时候是否启动gzip压缩
