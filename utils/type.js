@@ -7,4 +7,5 @@ const type = {
   isNumber: value => typeof value === "number",
   isString: value => typeof value === "string"
 }
-export default  type;
+
+export default type;

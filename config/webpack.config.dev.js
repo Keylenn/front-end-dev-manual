@@ -2,11 +2,15 @@
 * 开发环境webpack配置
 * */
 
-const  { baseConfig,join } = require("./webpack.config.base");
+const baseConfig = require("./webpack.config.base");
 const merge = require("webpack-merge");
 const webpack = require("webpack");
 
-const devCofig = merge(baseConfig, {
+const { 
+  join,
+} = require('./utils');
+
+const devConfig = merge(baseConfig, {
   mode: "development",
   devtool: "cheap-module-eval-source-map",
   devServer: {
@@ -39,4 +43,4 @@ const devCofig = merge(baseConfig, {
   ]
 });
 
-module.exports = devCofig;
+module.exports = devConfig;

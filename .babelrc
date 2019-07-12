@@ -15,7 +15,14 @@
     [
       "import", {"libraryName": "antd", "style": "css"} //支持antd按需加载组件
     ],
-    ["@babel/plugin-proposal-decorators", { "legacy": true }], //支持装饰器语法
-    "@babel/plugin-proposal-class-properties" //使用calss新属性
-  ]
+    [
+      "@babel/plugin-proposal-decorators", { "legacy": true } //支持装饰器语法
+    ], 
+    "@babel/plugin-proposal-class-properties", //使用calss新属性
+    [
+      "styled-jsx/babel", { //支持styled-jsx,cssinjs
+        "plugins": ["styled-jsx-plugin-postcss"]  //配置styled-jsx插件，支持css预处理器和postcss等
+      }
+    ],
+  ]  
 }
