@@ -100,7 +100,7 @@ function getHtmlWebpackPlugin(entry) {
     const baseConfig = {
       template: join(`src/${name}.html`), //模板路径
       filename: `${name}.html`, //目标文件位置，以output下的path作为相对路径
-      inject: false, //不注入js资源，具体参考https://github.com/jantimon/html-webpack-plugin
+      inject: true, //注入js到body底部，具体参考https://github.com/jantimon/html-webpack-plugin
       excludeChunks: entryNames.filter(n => n !== name) //允许跳过块
     }; 
     const prodConfig = {
@@ -120,6 +120,7 @@ function getHtmlWebpackPlugin(entry) {
   });  
   return htmlWebpackPluginList;
 }
+
 
 
 

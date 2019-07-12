@@ -101,7 +101,7 @@ const baseConfig = {
     new HtmlWebpackExternalsPlugin({ //基础库分离，如echarts，jquery， 百度地图api
       externals: [
         {
-          module: 'excharts',
+          module: 'echarts',
           entry: 'https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts-en.common.js',
           global: 'Echarts'
         }
@@ -114,6 +114,5 @@ if(bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; //可视化分析进行性能优化
   baseConfig.plugins.push(new BundleAnalyzerPlugin());
 }
-
 
 module.exports = baseConfig;
