@@ -9,6 +9,10 @@
 /coverage
 
 # production
+dist/
+!dist/manifest.json
+!dist/vendor.dll.js
+
 
 # misc
 .DS_Store
