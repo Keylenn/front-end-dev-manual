@@ -10,8 +10,7 @@
 
 # production
 dist/
-!dist/manifest.json
-!dist/vendor.dll.js
+!dist/[manifest.json, vendor.dll.js]
 
 
 # misc
