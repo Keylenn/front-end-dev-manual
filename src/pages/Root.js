@@ -3,6 +3,6 @@ import React from 'react';
 import App from '../component/App/App';
 
 
-const PagesApp = ()=> <App />;
+const PagesRoot = ()=> <App />;
 
-export default PagesApp;
+export default PagesRoot;
