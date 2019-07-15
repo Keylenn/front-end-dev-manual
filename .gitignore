@@ -9,8 +9,9 @@
 /coverage
 
 # production
-dist/
-!dist/[manifest.json, vendor.dll.js]
+/dist/
+!/dist/manifest.json
+!/dist/vendor.dll.js
 
 
 # misc
