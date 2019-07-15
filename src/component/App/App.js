@@ -1,10 +1,26 @@
 import React from 'react';
+import css from 'styled-jsx/css';
+import { useDocumentTitle } from 'utils/custom-hooks';
 
-const App = ()=>{
-  return (
-    <div className="app">
-      app
-    </div>
+export default function App() {
+  useDocumentTitle('frontend dev manual');
+  return(
+    <>
+      <div className="app">
+        hello, frontend dev manual~
+      </div>
+      <style jsx>{staticStyle}</style>
+    </>
   );
 }
-export default  App;
+
+
+const staticStyle = css`
+  .app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 20px; /*no*/
+  }
+`;
