@@ -3,7 +3,7 @@
  * @Author: hejilun
  * @Date: 2019-07-08 18:56:54
  * @LastEditors: hejilun
- * @LastEditTime: 2019-07-12 14:41:37
+ * @LastEditTime: 2019-07-16 13:38:13
  */
 
 'use strict'
@@ -15,4 +15,5 @@ const {
 module.exports =  {
     utils: join('utils'),
     components: join('src/components'),
+    assets: join('src/assets'),
 }

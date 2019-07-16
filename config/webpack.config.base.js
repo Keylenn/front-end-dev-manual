@@ -3,7 +3,7 @@
  * @Author: hejilun
  * @Date: 2019-06-05 09:25:56
  * @LastEditors: hejilun
- * @LastEditTime: 2019-07-16 10:06:41
+ * @LastEditTime: 2019-07-16 13:53:38
  */
 
 'use strict'
@@ -56,7 +56,7 @@ const baseConfig = {
     rules:[
       {
         test: /\.jsx?$/,
-        use: "babel-loader?cacheDirectory",
+        use: 'happypack/loader?id=babel',
         include: join('src')
       },
       {
@@ -64,9 +64,8 @@ const baseConfig = {
         exclude:/node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          "postcss-loader"
-        ]
+          'happypack/loader?id=css'
+        ],
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -89,12 +88,19 @@ const baseConfig = {
       chunkFileName: 'css/[id].[contenthash].css'
     }),
     new HappyPack({
-      id: 'happyBabel',  //处理哪类文件
-      loaders: [{
-        loader: 'babel-loader?cacheDirectory=true',
-      }],
+      id: 'babel',  //处理哪类文件
+      loaders: [ 'babel-loader?cacheDirectory=true' ], //对应module下rules的loader配置
       threadPool: happyThreadPool, //共享进程池
       verbose: true, //允许输出日志
+    }),
+    new HappyPack({
+      id: 'css',
+      loaders:  [
+        'css-loader',
+        "postcss-loader"
+      ],
+      threadPool: happyThreadPool, 
+      verbose: true,
     }),
     new HtmlWebpackExternalsPlugin({ //基础库分离，如echarts，jquery， 百度地图api
       externals: [
