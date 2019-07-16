@@ -7,7 +7,7 @@ export default function App() {
   return(
     <>
       <div className="app">
-        hello, frontend dev manual~
+        hello, frontend dev manual~~
       </div>
       <style jsx>{staticStyle}</style>
     </>

@@ -10,8 +10,8 @@
 
 # production
 dist/*
-!dist/manifest.json
-!dist/vendor.dll.js
+!dist/*.manifest.json
+!dist/*.dll.js
 
 # misc
 .DS_Store

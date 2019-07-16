@@ -2,7 +2,7 @@
 * 生产环境webpack配置
 * */
 const  baseConfig = require("./webpack.config.base");
-const CleanWebpackPlugin = require('clean-webpack-plugin'); // 打包前清空打包目录的插件
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 打包前清空打包目录的插件@v3.0.0
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); //优化压缩css
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin'); //压缩js
 const merge = require("webpack-merge");
@@ -81,11 +81,9 @@ const prodConfig = merge(baseConfig, {
     ]
   },
   plugins:[
-    new CleanWebpackPlugin(['dist'], {
-      root: rootPath,
-      exclude: ['manifest.json', 'vendor.dll.js'],
-      verbose: true, //将日志写入控制台
-    }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['**/*', '!*.dll.js', '!*.manifest.json' ], //不清除动态依赖库
+    })
   ]
 });
 

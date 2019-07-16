@@ -3,12 +3,13 @@
  * @Author: hejilun
  * @Date: 2019-07-08 18:37:58
  * @LastEditors: hejilun
- * @LastEditTime: 2019-07-12 17:41:49
+ * @LastEditTime: 2019-07-16 10:33:23
  */
 
 'use strict'
 const path = require("path");
 const glob = require("glob");
+const webpack= require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // 根据模板生成html文件，实现html资源复用
 
 const {
@@ -28,6 +29,7 @@ module.exports = {
   getOutput,
   getUrlLoader,
   getHtmlWebpackPlugin,
+  getDllReferencePlugin,
 }
 
 /**
@@ -35,8 +37,8 @@ module.exports = {
  * @param {string} relativePath 
  * @return {string} absolutePath
  */
-function join(relativePath) {
-  return path.join(rootPath, relativePath)
+function join(...relativePath) {
+  return path.join(rootPath, ...relativePath)
 }
 
 /**
@@ -100,7 +102,7 @@ function getHtmlWebpackPlugin(entry) {
     const baseConfig = {
       template: join(`src/${name}.html`), //模板路径
       filename: `${name}.html`, //目标文件位置，以output下的path作为相对路径
-      inject: true, //注入js到body底部，具体参考https://github.com/jantimon/html-webpack-plugin
+      inject: true, //注入script标签到body底部，具体参考https://github.com/jantimon/html-webpack-plugin
       excludeChunks: entryNames.filter(n => n !== name) //允许跳过块
     }; 
     const prodConfig = {
@@ -119,6 +121,24 @@ function getHtmlWebpackPlugin(entry) {
     )
   });  
   return htmlWebpackPluginList;
+}
+
+
+/**
+ * @description: 自动引入动态库
+ * @param {object} dllEntry 
+ * @return {array} dllReferencePluginList
+ */
+function getDllReferencePlugin(dllEntry) {
+  const dllReferencePluginList = [];
+  dllEntry.forEach(dllEntryName => {
+    dllReferencePluginList.push(
+      new webpack.DllReferencePlugin({
+        manifest:  require(`${rootPath}/dist/${dllEntryName}.manifest.json`)
+      })
+    )
+  })
+  return dllReferencePluginList;
 }
 
 

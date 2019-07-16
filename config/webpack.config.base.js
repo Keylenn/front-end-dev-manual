@@ -3,11 +3,11 @@
  * @Author: hejilun
  * @Date: 2019-06-05 09:25:56
  * @LastEditors: hejilun
- * @LastEditTime: 2019-07-12 17:46:12
+ * @LastEditTime: 2019-07-16 10:06:41
  */
 
 'use strict'
-const webpack= require("webpack");
+const dllConfig = require('../config/webpack.config.dll');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 从js中抽离css，利用浏览器的缓存
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin'); // 基础库分离
 const HappyPack = require('happypack'); //提高构建速度，参考https://www.jianshu.com/p/b9bf995f3712
@@ -24,6 +24,7 @@ const {
   join,
   getUrlLoader,
   getHtmlWebpackPlugin,
+  getDllReferencePlugin,
 } = require('./utils')
 
 const {
@@ -32,9 +33,9 @@ const {
 
 const entry = getEntry(); //打包入口
 const alias = require('./alias'); //别名
+const dllEntry = Object.keys(dllConfig.entry); //动态链接库入口
 
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-
 
 const baseConfig = {
   context: rootPath,
@@ -55,8 +56,8 @@ const baseConfig = {
     rules:[
       {
         test: /\.jsx?$/,
-        use: "babel-loader",
-        exclude: /node_modules/
+        use: "babel-loader?cacheDirectory",
+        include: join('src')
       },
       {
         test: /\.css$/,
@@ -80,10 +81,7 @@ const baseConfig = {
     ]
   },
   plugins: [
-    new webpack.DllReferencePlugin({ //动态链接资源,具体配置详见webpack.config.dll.js
-      context: rootPath,
-      manifest: join('dist/manifest.json')
-    }),
+    ...getDllReferencePlugin(dllEntry),
     ...getHtmlWebpackPlugin(entry),
     new MiniCssExtractPlugin({
       //contenthash 保证只有当css文件本身发生变动时对应的hash才发生变化，与css文件所处的模块内容变化无关
