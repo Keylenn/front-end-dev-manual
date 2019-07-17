@@ -61,9 +61,18 @@ const baseConfig = {
       },
       {
         test: /\.css$/,
+        exclude:/node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           'happypack/loader?id=css'
+        ],
+      },
+      {
+        test: /\.css$/,
+        include: join('node_modules/antd/lib'),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
         ],
       },
       {
