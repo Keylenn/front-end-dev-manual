@@ -1,4 +1,4 @@
-import React, { useEffect, useRef  } from 'react';
+import React, { useState, useEffect, useRef  } from 'react';
 /**
  * @description 参考资源
  * 1: 【第1645期】useHooks~小窍门, https://mp.weixin.qq.com/s/fp-GNIcz5zwrikcM0648DQ
@@ -45,6 +45,24 @@ export function useEventListener(eventName, handler, element = global) {
         element.removeEventListener(eventName, eventHandler);
       };
     }, [eventName, element] );
+}
+
+
+/**
+ * @description: 异步加载组件,配合React-router
+ * @param {func} load 组件加载函数，load 函数会返回一个 Promise，在文件加载完成时 resolve
+ * @return: {AsyncComponent} 返回一个需要异步加载的组件
+ */
+export default function useAsyncComponent(load) {
+  return  function AsyncComponent() {
+    const [component, setComponent] = useState(null);
+    useEffect( () => {
+      load()
+        .then(res => setComponent(res.default))
+    }, [])
+    return component;
+  }
+
 }
 
 

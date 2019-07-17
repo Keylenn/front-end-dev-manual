@@ -3,7 +3,7 @@
  * @Author: hejilun
  * @Date: 2019-06-05 09:25:56
  * @LastEditors: hejilun
- * @LastEditTime: 2019-07-16 13:53:38
+ * @LastEditTime: 2019-07-17 14:05:21
  */
 
 'use strict'
@@ -57,11 +57,10 @@ const baseConfig = {
       {
         test: /\.jsx?$/,
         use: 'happypack/loader?id=babel',
-        include: join('src')
+        exclude:/node_modules/,
       },
       {
         test: /\.css$/,
-        exclude:/node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           'happypack/loader?id=css'

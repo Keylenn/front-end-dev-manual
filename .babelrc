@@ -12,6 +12,7 @@
     "@babel/react"
   ],
   "plugins": [
+    "@babel/syntax-dynamic-import", //解决Babel 报出错误：不认识 import(*) 语法
     [
       "import", {"libraryName": "antd", "style": "css"} //支持antd按需加载组件
     ],

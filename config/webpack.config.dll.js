@@ -18,7 +18,7 @@ const {
 module.exports = {
   mode:"production",
   entry:  {
-    react:  [ 'react', 'react-dom' ],
+    react:  [ 'react', 'react-dom', 'react-router-dom' ],
     polyfill: [ 'core-js/fn/object/assign', 'core-js/fn/promise' ],
   },
   output: {
