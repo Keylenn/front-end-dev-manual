@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 
 export default function Nav(props) {
-    const [current, setCurrent] = useState('home');
+    const hash = window.location.hash;
+    const matchRes = hash.match(/(?<=(#\/))\w+\/?$/); //预搜索
+    const key = matchRes ? matchRes[0].replace('\/','' ) : 'home'
+    const [current, setCurrent] = useState(key);
     const handleClickMenu = useCallback((e) => {
         setCurrent(e.key)
     })
@@ -13,7 +16,7 @@ export default function Nav(props) {
                 <Link to='/'>App</Link>
             </Menu.Item>
             <Menu.Item key="about">
-                <Link to='/about'>TestAsync</Link>
+                <Link to='/about'>About</Link>
             </Menu.Item>
         </Menu>
     );

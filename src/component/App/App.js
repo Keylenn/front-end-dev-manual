@@ -7,7 +7,7 @@ export default function App() {
   return(
     <>
       <div className="app">
-        hello, frontend dev manual~~
+        Hello, Welcome to frontend dev manual~~
       </div>
       <style jsx>{staticStyle}</style>
     </>
@@ -20,6 +20,7 @@ const staticStyle = css`
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     height: 100vh;
     font-size: 20px; /*no*/
   }
