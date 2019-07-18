@@ -3,7 +3,7 @@
  * @Author: hejilun
  * @Date: 2019-07-08 18:37:58
  * @LastEditors: hejilun
- * @LastEditTime: 2019-07-18 18:49:31
+ * @LastEditTime: 2019-07-18 19:34:14
  */
 
 'use strict'
@@ -171,7 +171,8 @@ function getDefaultDevServerConfig() {
 function getLocalIp() {
   let ip = '';
   Object.values( os.networkInterfaces() )
-    .map(item => {
+    .forEach(item => {
+      if(ip) return;
       Array.isArray(item) 
         &&  item.forEach(({ address, family, internal }) => {
           if(!internal && family === "IPv4") {
