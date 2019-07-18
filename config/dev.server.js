@@ -47,24 +47,25 @@ app.use(express.static(devConfig.output.path))
 
 app.listen(PORT, HOST, function () {
   const localIp = getLocalIp();
-  if(localIp) {
+  if(!localIp) {
     console.log(
       'Project is running at'.white,
       `http://${localIp}:${PORT}/`.info,
       'or'.white, 
-      'http://127.0.0.1:2019/'.info,
+      `http://127.0.0.1:${PORT}/`.info,
       'or'.white, 
-      'http://localhost:2019/'.info
+      `http://localhost:${PORT}/\n`.info
     );
   } else {
     console.log(
       'Project is running at'.white,
-      `http://${HOST}:${PORT}/\n`.info
+      `http://127.0.0.1:${PORT}/`.info,
+      'or'.white, 
+      `http://localhost:${PORT}/\n`.info
     );
     console.log(
-      'You can use'.tip,
-      `[your local ip | 127.0.0.1 | localhost]:${PORT}`.info,  
-      'to access\n'.tip
+      '｢tips｣:'.tip,
+      'You can also use your local ip address to access\n'.white
     );
   }
 });
