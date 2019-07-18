@@ -173,10 +173,7 @@ function getDefaultDevServerConfig() {
         errors: true,
         warnings: true,
       },
-    },
-    plugins: [
-      new webpack.HotModuleReplacementPlugin() // 开启热更新配置第二步
-    ]
+    }
   }
   return defaultDevServerConfig;
 }

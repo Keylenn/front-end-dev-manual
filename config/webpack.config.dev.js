@@ -3,6 +3,7 @@
 * */
 
 const baseConfig = require("./webpack.config.base");
+const webpack = require('webpack');
 const merge = require("webpack-merge");
 
 const {
@@ -12,9 +13,12 @@ const {
 let config = {
   mode: "development",
   devtool: "cheap-module-eval-source-map",
+  plugins: [
+    new webpack.HotModuleReplacementPlugin() // 开启热更新
+  ]
 }
 
-//非自定制服务，添加默认的webapck-dev-server
+//非自定制服务，添加webapck的devServer配置
 if(!commission_server) {
   const { getDefaultDevServerConfig } = require('./utils');
   const defaultDevServerConfig = getDefaultDevServerConfig()
