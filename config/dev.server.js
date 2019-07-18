@@ -47,7 +47,7 @@ app.use(express.static(devConfig.output.path))
 
 app.listen(PORT, HOST, function () {
   const localIp = getLocalIp();
-  if(!localIp) {
+  if(localIp) {
     console.log(
       'Project is running at'.white,
       `http://${localIp}:${PORT}/`.info,
