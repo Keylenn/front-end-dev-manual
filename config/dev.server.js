@@ -3,8 +3,17 @@ const webpackDevMiddle = require('webpack-dev-middleware');
 const webpackHotMiddle = require('webpack-hot-middleware');
 const webpack = require('webpack');
 const devConfig = require('./webpack.config.dev');
+const {
+  compilingStats,
+} = require('./config')
+
+const {
+  getLocalIp,
+} = require('./utils')
+
 const app = express();
 const PORT = 2019;
+const HOST = '0.0.0.0';
 
 const isSingleEntry = typeof devConfig.entry === 'string';
 const webpackHotMiddleEntry = `webpack-hot-middleware/client?noInfo=true&reload=true`;
@@ -21,13 +30,14 @@ if(isSingleEntry){
 const devCompiler = webpack(devConfig);
 
 app.use(
-  webpackDevMiddle(devCompiler,{
+  webpackDevMiddle(devCompiler, {
     publicPath: devConfig.output.publicPath,
+    stats: compilingStats,
   })
 )
 
 app.use(
-  webpackHotMiddle(devCompiler,{
+  webpackHotMiddle(devCompiler, {
    
   })
 )
@@ -35,6 +45,26 @@ app.use(
 // 使用静态资源目录，才能访问到/dist/
 app.use(express.static(devConfig.output.path))
 
-app.listen(PORT, function () {
-  console.log(`Your project listening on port ${PORT}!\n`);
+app.listen(PORT, HOST, function () {
+  const localIp = getLocalIp();
+  if(localIp) {
+    console.log(
+      'Project is running at'.white,
+      `http://${localIp}:${PORT}/`.info,
+      'or'.white, 
+      'http://127.0.0.1:2019/'.info,
+      'or'.white, 
+      'http://localhost:2019/'.info
+    );
+  } else {
+    console.log(
+      'Project is running at'.white,
+      `http://${HOST}:${PORT}/\n`.info
+    );
+    console.log(
+      'You can use'.tip,
+      `[your local ip | 127.0.0.1 | localhost]:${PORT}`.info,  
+      'to access\n'.tip
+    );
+  }
 });

@@ -3,7 +3,7 @@
  * @Author: hejilun
  * @Date: 2019-06-05 09:25:56
  * @LastEditors: hejilun
- * @LastEditTime: 2019-07-17 14:05:21
+ * @LastEditTime: 2019-07-18 15:49:42
  */
 
 'use strict'
@@ -99,7 +99,7 @@ const baseConfig = {
       id: 'babel',  //处理哪类文件
       loaders: [ 'babel-loader?cacheDirectory=true' ], //对应module下rules的loader配置
       threadPool: happyThreadPool, //共享进程池
-      verbose: true, //允许输出日志
+      verbose: false, //不输出日志
     }),
     new HappyPack({
       id: 'css',
@@ -108,7 +108,7 @@ const baseConfig = {
         "postcss-loader"
       ],
       threadPool: happyThreadPool, 
-      verbose: true,
+      verbose: false,
     }),
     new HtmlWebpackExternalsPlugin({ //基础库分离，如echarts，jquery， 百度地图api
       externals: [

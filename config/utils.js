@@ -3,7 +3,7 @@
  * @Author: hejilun
  * @Date: 2019-07-08 18:37:58
  * @LastEditors: hejilun
- * @LastEditTime: 2019-07-16 10:33:23
+ * @LastEditTime: 2019-07-18 18:49:31
  */
 
 'use strict'
@@ -11,6 +11,7 @@ const path = require("path");
 const glob = require("glob");
 const webpack= require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // 根据模板生成html文件，实现html资源复用
+const os = require('os');
 
 const {
   rootPath,
@@ -19,6 +20,7 @@ const {
 const {
   NODE_ENV,
   entryDocName,
+  compilingStats,
 } = require('./config')
 
 const isProd = NODE_ENV ==="production" ? true : false;
@@ -31,6 +33,7 @@ module.exports = {
   getHtmlWebpackPlugin,
   getDllReferencePlugin,
   getDefaultDevServerConfig,
+  getLocalIp,
 }
 
 /**
@@ -155,27 +158,29 @@ function getDefaultDevServerConfig() {
       port: 2019,
       compress: true, // 服务器返回浏览器的时候是否启动gzip压缩
       hot: true, // 开启热更新配置第一步
-      stats: { //用来控制编译的时候shell上的输出内容
-        timings: true,
-        modules: false,
-        assets: false,
-        entrypoints: false,
-        assetsSort: 'field',
-        builtAt: false,
-        cached: false,
-        cachedAssets: false,
-        children: false,
-        chunks: false,
-        chunkGroups: false,
-        chunkModules: false,
-        chunkOrigins: false,
-        performance: true,
-        errors: true,
-        warnings: true,
-      },
+      stats: compilingStats,
     }
   }
   return defaultDevServerConfig;
+}
+
+/**
+ * @description: 获取本机ip地址
+ * @return {string} ip
+ */
+function getLocalIp() {
+  let ip = '';
+  Object.values( os.networkInterfaces() )
+    .map(item => {
+      Array.isArray(item) 
+        &&  item.forEach(({ address, family, internal }) => {
+          if(!internal && family === "IPv4") {
+            ip = address;
+            return;
+          }
+        })
+    });
+  return ip;
 }
 
 

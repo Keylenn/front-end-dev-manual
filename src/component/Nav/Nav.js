@@ -4,8 +4,8 @@ import { Menu } from 'antd';
 
 export default function Nav(props) {
     const hash = window.location.hash;
-    const matchRes = hash.match(/(?<=(#\/))\w+\/?$/); //预搜索
-    const key = matchRes ? matchRes[0].replace('\/','' ) : 'home'
+    const matchRes = hash.match(/(?<=(#\/))\w+(?=(\W))?/); //预搜索
+    const key = matchRes ? matchRes[0] : 'home';
     const [current, setCurrent] = useState(key);
     const handleClickMenu = useCallback((e) => {
         setCurrent(e.key)
