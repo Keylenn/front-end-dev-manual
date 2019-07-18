@@ -5,7 +5,7 @@ export default function About() {
   return(
     <>
       <div className="about">
-       这是关于webpack4.0+babel7.0+其他库的使用以及参数配置的手册，项目基于webpack4.0和babel7.0，默认支持antd，配合React-Router v4实现异步加载页面组件，支持styled-jsx， 使用px2vw实现移动端适配，内置封装了axios和常用的React Hooks~~
+       这是关于webpack4.0+babel7.0+其他库的使用以及参数配置的手册，项目基于webpack4.0和babel7.0，默认支持antd，配合React-Router v4实现异步加载页面组件，支持styled-jsx， 使用post-css（px2vw实现移动端适配，autoprefixer自动加前缀，...），内置封装了axios和常用的React Hooks~~
       </div>
       <style jsx>{staticStyle}</style>
     </>

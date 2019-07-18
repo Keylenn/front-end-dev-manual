@@ -16,4 +16,5 @@ module.exports = {
     entryDocName: ENTRY_DOCUMENT_NAME,
     productionGzip: false, //是否开启gzip压缩
     bundleAnalyzerReport: process.env.npm_config_report, //是否开启可视化分析文件
+    commission_server: process.env.commission_server ? true : false, // 是否使用定制的devServer 
 }

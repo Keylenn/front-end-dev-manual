@@ -30,6 +30,7 @@ module.exports = {
   getUrlLoader,
   getHtmlWebpackPlugin,
   getDllReferencePlugin,
+  getDefaultDevServerConfig,
 }
 
 /**
@@ -65,6 +66,7 @@ function join(...relativePath) {
  */ 
 function getOutput() {
   return {
+    publicPath: '/',
     path: join("dist"),
     filename: `js/[name]${isProd ? '[chunkhash:8]' : ''}.js`
   }
@@ -140,6 +142,47 @@ function getDllReferencePlugin(dllEntry) {
   })
   return dllReferencePluginList;
 }
+
+/**
+ * @description: 使用webpack-dev-server开启服务的wepack配置
+ * @return {object} defaultDevServerConfig
+ */
+function getDefaultDevServerConfig() {
+  const defaultDevServerConfig = {
+    devServer: {
+      host: '0.0.0.0',//可以使用ip访问
+      contentBase: join("dist"), //配置DevServer HTTP服务器的文件根目录为静态文件根目录
+      port: 2019,
+      compress: true, // 服务器返回浏览器的时候是否启动gzip压缩
+      hot: true, // 开启热更新配置第一步
+      stats: { //用来控制编译的时候shell上的输出内容
+        timings: true,
+        modules: false,
+        assets: false,
+        entrypoints: false,
+        assetsSort: 'field',
+        builtAt: false,
+        cached: false,
+        cachedAssets: false,
+        children: false,
+        chunks: false,
+        chunkGroups: false,
+        chunkModules: false,
+        chunkOrigins: false,
+        performance: true,
+        errors: true,
+        warnings: true,
+      },
+    },
+    plugins: [
+      new webpack.HotModuleReplacementPlugin() // 开启热更新配置第二步
+    ]
+  }
+  return defaultDevServerConfig;
+}
+
+
+
 
 
 
