@@ -1,13 +1,3 @@
-export const type = {
-  isObject: value => Object.prototype.toString.call(value) === '[object Object]',
-  isFunc: value => Object.prototype.toString.call(value) === '[object Function]',
-  isArray: value => ( Array.isArray
-    ? Array.isArray(value) 
-    : Object.prototype.toString.call(value) === '[object Array]'
-  ),
-  isNumber: value => typeof value === "number",
-  isString: value => typeof value === "string"
-}
 
 export const common = {
   // 返回记忆函数，实现缓存函数的结果，对象类型调换顺序后产生新key，视为新的缓存结果

@@ -32,7 +32,7 @@
     "server": "cross-env NODE_ENV=development commission_server=true node config/dev.server.js",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js",
     "dll": "webpack --config config/webpack.config.dll.js",
-    "report:dev": "cross-env npm_config_report=true npm run dev",
+    "report:dev": "cross-env npm_config_report=true npm run server",
     "report:prod": "cross-env npm_config_report=true npm run build"
   },
   "devDependencies": {
