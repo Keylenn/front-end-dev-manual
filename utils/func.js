@@ -1,11 +1,23 @@
 export const type = {
   isObject: value => Object.prototype.toString.call(value) === '[object Object]',
   isFunc: value => Object.prototype.toString.call(value) === '[object Function]',
-  isArray: value => ( !Array.isArray
-    ? Object.prototype.toString.call(value) === '[object Array]'
-    : Array.isArray(value) ),
+  isArray: value => ( Array.isArray
+    ? Array.isArray(value) 
+    : Object.prototype.toString.call(value) === '[object Array]'
+  ),
   isNumber: value => typeof value === "number",
   isString: value => typeof value === "string"
+}
+
+export const common = {
+  // 返回记忆函数，实现缓存函数的结果，对象类型调换顺序后产生新key，视为新的缓存结果
+  memoize: fn => 
+      (...args) => {
+          if(!fn.cache) fn.cache = {};
+          let key = '';
+          args.forEach(arg => key += `_${JSON.stringify(arg)}`);
+          return fn.cache[key] = fn.cache[key] || fn(...args);
+      },
 }
 
 export const date = {
@@ -39,30 +51,24 @@ export const date = {
     const digit = ["天", "一", "二" ,"三", "四", "五", "六"];
     return `星期${digit[week]}`;
   }
-
 }
 
 export const storage =  {
   getItem(key, useLocalStorage) {
-    const data = useLocalStorage && useLocalStorage === true ? localStorage.getItem(key) : sessionStorage.getItem(key);
-    if (data) {
-      return JSON.parse(data);
-    }
-    return null;
+    const data = useLocalStorage === true 
+      ? localStorage.getItem(key) 
+      : sessionStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
   },
   setItem(key, data, useLocalStorage) {
-    if (useLocalStorage && useLocalStorage === true) {
-      localStorage.setItem(key, JSON.stringify(data));
-    } else {
-      sessionStorage.setItem(key, JSON.stringify(data));
-    }
+    useLocalStorage === true
+      ? localStorage.setItem(key, JSON.stringify(data))
+      : sessionStorage.setItem(key, JSON.stringify(data));
   },
   removeItem(key, useLocalStorage) {
-    if (useLocalStorage && useLocalStorage === true) {
-      localStorage.removeItem(key);
-    } else {
-      sessionStorage.removeItem(key);
-    }
+    useLocalStorage === true
+      ? localStorage.removeItem(key)
+      : sessionStorage.removeItem(key);
   }
 };
 
@@ -80,10 +86,7 @@ export const request = {
 }
 
 export const cookie = { //许多浏览器（如Google Chrome）不支持在本地文件中直接访问cookie,本地打开使用127.0.0.1
-  get: name => {
-    const cookieObj = _parseCookie2Json();
-    return name === undefined ? cookieObj : cookieObj[name];
-  },
+  get: common.memoize(_getCookie),
   set: (name, value, expiresDay) => {
     const _expires = type.isNumber(expiresDay)
                       ? `expires=${_getExpires(expiresDay)}`
@@ -100,38 +103,45 @@ export const cookie = { //许多浏览器（如Google Chrome）不支持在本�
 /**
  * 私有辅助函数
  * */
-
-const _parseCookie2Json = () => {
-  const _cookie = document.cookie;
-  const _cookieArr = _cookie.split(";");
-  let _cookieObj = {};
-  _cookieArr.map(singleCookie => {
-    const _singleCookieArr = singleCookie.trim().split("=");
-    const key = _singleCookieArr[0];
-    const value = _singleCookieArr[1];
-    _cookieObj[key] = value;
+const _getCookie = name => {
+  let cookie = '';
+  document.cookie.split('\;')
+  .forEach(item => {
+    if(cookie) return;
+    const [key, value] = item.trim().split('\=');
+    if(key === name)  cookie = value;
   })
-  return Object.assign({}, _cookieObj);
+  return cookie;
 }
 
 const _getExpires = expiredays => {
-  const _exdate=new Date();
+  const _exdate = new Date();
   _exdate.setDate(_exdate.getDate() + expiredays);
-  const expires = _exdate.toUTCString();
-  return expires;
+  return _exdate.toUTCString();
 }
 
-const _initDate = value => {
-  const date = value ? new Date(value) : new Date();
-  return {
-    year: date.getFullYear(),
-    month: _fixedZero( date.getMonth() + 1 ),
-    day: _fixedZero( date.getDate() ),
-    hour: _fixedZero( date.getHours() ),
-    min: _fixedZero( date.getMinutes() ),
-    sec: _fixedZero( date.getSeconds() ),
-    week: date.getDay()
+const _initDate = (value, options={}) => {
+  if(type.isObject(value)){
+    options = value;  
+    value = void 0;
   }
+  const {
+    showType = 'all',
+    useFixedZero = true,
+  } = options;
+  const date = value ? new Date(value) : new Date();
+  if(showType === 'week') return date.getDay();
+  const dateInfo = {
+      year: date.getFullYear(),
+      month: useFixedZero ? _fixedZero( date.getMonth() + 1 ) :  date.getMonth() + 1,
+      day: useFixedZero ?_fixedZero( date.getDate() ) : date.getDate(),
+  };
+  if(showType === 'all' || showType === 'time'){
+    dateInfo.hour = useFixedZero ? _fixedZero( date.getHours() ) : date.getHours();
+    dateInfo.min = useFixedZero ? _fixedZero( date.getMinutes() ) : date.getMinutes();
+    dateInfo.sec = useFixedZero ? _fixedZero( date.getSeconds() ) : date.getSeconds();
+  }
+  return dateInfo;
 }
 
 const _getDate = options => {
