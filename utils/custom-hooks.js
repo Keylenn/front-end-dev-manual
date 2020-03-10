@@ -53,7 +53,7 @@ export function useEventListener(eventName, handler, element = global) {
  * @param {func} load 组件加载函数，load 函数会返回一个 Promise，在文件加载完成时 resolve
  * @return: {AsyncComponent} 返回一个需要异步加载的组件
  */
-export default function useAsyncComponent(load) {
+export function useAsyncComponent(load) {
   return  function AsyncComponent() {
     const [component, setComponent] = useState(null);
     useEffect( () => {
@@ -64,6 +64,13 @@ export default function useAsyncComponent(load) {
   }
 
 }
+
+/**
+ * @description: 
+ * @param {type} 
+ * @return: 
+ */
+
 
 
 /** -----------------------------------------------2.网络请求-----------------------------------------------*/

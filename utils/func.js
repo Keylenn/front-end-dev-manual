@@ -1,4 +1,21 @@
 
+/**
+ * @description: 
+ * @param {type} 
+ * @return: 
+ */
+export function createCalc(operStr) {
+  return function() {
+    if (typeof num1 != 'number' || typeof num2 != 'number') {
+      console.error('argument error: num1 and num2 should be numbers');
+      return NaN;
+    }
+  }
+}
+
+
+
+
 export const common = {
   // 返回记忆函数，实现缓存函数的结果，对象类型调换顺序后产生新key，视为新的缓存结果
   memoize: fn => 
@@ -94,14 +111,8 @@ export const cookie = { //许多浏览器（如Google Chrome）不支持在本�
  * 私有辅助函数
  * */
 const _getCookie = name => {
-  let cookie = '';
-  document.cookie.split('\;')
-  .forEach(item => {
-    if(cookie) return;
-    const [key, value] = item.trim().split('\=');
-    if(key === name)  cookie = value;
-  })
-  return cookie;
+  const res = document.cookie.match(new RegExp(`(?<=(${name}=)).*(?=\;?)`));
+  return res ? res[0] : '';
 }
 
 const _getExpires = expiredays => {
