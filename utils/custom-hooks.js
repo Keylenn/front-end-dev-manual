@@ -71,6 +71,27 @@ export function useAsyncComponent(load) {
  * @return: 
  */
 
+ // 未修改 from Dan Abramov: https://overreacted.io/zh-hans/making-setinterval-declarative-with-react-hooks/
+function useInterval(callback, delay=1000) {
+  let { current: savedCallback } = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback = callback;
+  });
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
 
 
 /** -----------------------------------------------2.网络请求-----------------------------------------------*/

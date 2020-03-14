@@ -3,9 +3,6 @@ import css from 'styled-jsx/css';
 import { useDocumentTitle } from 'utils/custom-hooks';
 import CirNavItem from 'component/UI/CirNav/Item';
 import { resolveCompdStyles } from 'utils/helper';
-import allCompStyles from './compStyles';
-
-const { compClass, compStyles } = resolveCompdStyles(allCompStyles);
 
 export default function App() {
   useDocumentTitle('frontend dev manual');
@@ -40,4 +37,14 @@ const staticStyle = css`
   }
 `;
 
+const allCompStyles = css`
+    .item {
+        color: #fff;
+    }
+    .item2 {
+        color: pink;
+    }
+`;
+
+const { compClass, compStyles } = resolveCompdStyles(allCompStyles);
 
